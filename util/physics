@@ -1,0 +1,17 @@
+import numpy as np
+
+mu_0 = 2.01335452495e-28
+mu_B = 0.0578838177025
+
+def E_DDI_BF(pos, spins, mu):
+    E = 0
+    mult = -mu_0 * mu_B**2 / (4 * np.pi)
+    for i in range(len(pos)):
+        for j in range(i+1, len(pos)):
+            r = pos[i] - pos[j]
+            d = np.linalg.norm(r)
+            r /= d
+            E += mult/d**3 * mu[i] * mu[j] * ( 3 * np.dot(spins[i], r) * np.dot(spins[j], r) - np.dot(spins[i], spins[j]) )
+    return E
+
+
