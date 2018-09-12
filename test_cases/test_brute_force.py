@@ -7,7 +7,7 @@ name = "Energy comparison to brute force calculation"
 
 def E_DDI_BF(pos, spins, mu_s = 1):
     E = 0
-    mult = - mu_0 * mu_B**2 / (4 * np.pi) * 10e29
+    mult = - mu_0 * mu_B**2 / (4 * np.pi * 1e-30) 
     for i in range(len(pos)):
         for j in range(i+1, len(pos)):
             r = pos[i] - pos[j]
