@@ -3,23 +3,29 @@ path_to_spirit_pkg = "/path/to/spirit/python"
 import sys
 sys.path.append(path_to_spirit_pkg)
 
-from test_cases import test_brute_force
+from test_cases import *
+
+tests = [Test_Brute_Force(), Test_Continuous_Nucleation(), Test_Homogeneous_Sphere()]
+# , Test_continuous_nucleation()]
 
 number_of_tests = 0
 number_of_passed = 0
 passed = []
 failed = []
 
-print(">>> TEST: " + test_brute_force.name + "\n")
-
-if test_brute_force.run():
-    passed.append(test_brute_force.name)
+for test in tests:
+    print("--------------------------------")
+    print("-->> BEGIN Test: " + test.name + " <<--\n")
+    if test.run():
+        passed.append(test.name)
 else:
-    failed.append(test_brute_force.name)
+        failed.append(test.name)
+    print("\n-->> END Test:   " + test.name + " <<--")    
+    print("--------------------------------")
 
-print("\n>--------------------------------<")
+print("\n>================================<")
 print(  "              SUMMARY             ")
-print(  ">--------------------------------<")
+print(  ">================================<")
 print(">>> Passed {0} out of {1} tests".format(len(passed), len(passed) + len(failed)))
 print("\n>>> Failed tests:")
 for name in failed:
