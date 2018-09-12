@@ -14,7 +14,7 @@ def E_DDI_BF(pos, spins, mu_s = 1):
             d = np.linalg.norm(r)
             r /= d
             # E += mult/d**3 * mu[i] * mu[j] * ( 3 * np.dot(spins[i], r) * np.dot(spins[j], r) - np.dot(spins[i], spins[j]) )
-            E += mult/d**3 * mu_s * ( 3 * np.dot(spins[i], r) * np.dot(spins[j], r) - np.dot(spins[i], spins[j]) )
+            E += mult/d**3 * mu_s**2 * ( 3 * np.dot(spins[i], r) * np.dot(spins[j], r) - np.dot(spins[i], spins[j]) )
     return E
 
 def test_energy(p_state):
