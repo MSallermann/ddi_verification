@@ -3,21 +3,9 @@ import numpy as np
 from .test import Test
 
 class Test_Brute_Force(Test):
-    mu_0 = 2.01335452495e-28
-    mu_B = 0.0578838177025
-    name = "Energy comparison to brute force calculation"
 
-    def E_DDI_BF(self, pos, spins, mu_s = 1):
-        E = 0
-        mult = - self.mu_0 * self.mu_B**2 / (4 * np.pi * 1e-30) 
-        for i in range(len(pos)):
-            for j in range(i+1, len(pos)):
-                r = pos[i] - pos[j]
-                d = np.linalg.norm(r)
-                r /= d
-                # E += mult/d**3 * mu[i] * mu[j] * ( 3 * np.dot(spins[i], r) * np.dot(spins[j], r) - np.dot(spins[i], spins[j]) )
-                E += mult/d**3 * mu_s**2 * ( 3 * np.dot(spins[i], r) * np.dot(spins[j], r) - np.dot(spins[i], spins[j]) )
-        return E
+    name = "Comparison to brute force (energy)"
+    inputfile = "test_cases/input/input_brute_force.cfg"
 
     def test_energy(self, p_state):
         nos = system.get_nos(p_state)
@@ -30,12 +18,10 @@ class Test_Brute_Force(Test):
         return E_BF, E_Spirit
 
     def run(self):
-        inputfile = "test_cases/input/input_brute_force.cfg"
         passed = True
 
-        with state.State(inputfile, quiet = True) as p_state:
+        with state.State(self.inputfile, quiet = True) as p_state:
             hamiltonian.set_boundary_conditions(p_state, [0, 0, 0], idx_image=-1, idx_chain=-1)
-
             hamiltonian.set_field(p_state, 0.0, [0, 0 , 1])
             hamiltonian.set_anisotropy(p_state, 0.0, [0, 0 , 1])
             hamiltonian.set_anisotropy(p_state, 0.0, [0, 0 , 1])
@@ -46,7 +32,7 @@ class Test_Brute_Force(Test):
             system.update_data(p_state)
             E_Bf, E_Spirit = self.test_energy(p_state)
             passed = True
-            print('\n>>> Result 1: plus_z')
+            print('>>> Result 1: plus_z')
             print('Brute Force = ', E_Bf)
             print('Spirit      = ', E_Spirit)
             if np.abs(E_Bf - E_Spirit) > 1e-6:
