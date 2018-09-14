@@ -7,7 +7,6 @@ class Test_mu_s_Scaling(Test):
     inputfile1 = "test_cases/input/input_mu_s_scaling_1.cfg"
     inputfile2 = "test_cases/input/input_mu_s_scaling_2.cfg"
 
-
     def run(self):
         passed = True
 
