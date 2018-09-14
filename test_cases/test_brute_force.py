@@ -11,10 +11,6 @@ class Test_Brute_Force(Test):
         passed = True
 
         with state.State(self.inputfile, quiet = True) as p_state:
-            hamiltonian.set_boundary_conditions(p_state, [0, 0, 0], idx_image=-1, idx_chain=-1)
-            hamiltonian.set_field(p_state, 0.0, [0, 0 , 1])
-            hamiltonian.set_anisotropy(p_state, 0.0, [0, 0 , 1])
-            hamiltonian.set_anisotropy(p_state, 0.0, [0, 0 , 1])
 
             configuration.plus_z(p_state)
             simulation.start(p_state, simulation.METHOD_LLG, simulation.SOLVER_SIB, n_iterations=1)
