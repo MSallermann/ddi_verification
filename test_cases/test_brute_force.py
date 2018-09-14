@@ -7,16 +7,6 @@ class Test_Brute_Force(Test):
     name = "Comparison to brute force (energy)"
     inputfile = "test_cases/input/input_brute_force.cfg"
 
-    def test_energy(self, p_state):
-        nos = system.get_nos(p_state)
-        pos = np.array(geometry.get_positions(p_state)).reshape(nos, 3)
-        spins = np.array(system.get_spin_directions(p_state)).reshape(nos, 3)
-
-        E_BF = self.E_DDI_BF(pos, spins)
-        E_Spirit = system.get_energy(p_state)
-
-        return E_BF, E_Spirit
-
     def run(self):
         passed = True
 
@@ -26,35 +16,46 @@ class Test_Brute_Force(Test):
             hamiltonian.set_anisotropy(p_state, 0.0, [0, 0 , 1])
             hamiltonian.set_anisotropy(p_state, 0.0, [0, 0 , 1])
 
-            # simulation.start(p_state, simulation.METHOD_LLG, simulation.SOLVER_SIB, n_iterations=10, single_shot = True)
-
             configuration.plus_z(p_state)
+            simulation.start(p_state, simulation.METHOD_LLG, simulation.SOLVER_SIB, n_iterations=1)
             system.update_data(p_state)
             E_Bf, E_Spirit = self.test_energy(p_state)
+            Gradient_Bf, Gradient_Spirit = self.test_gradient(p_state)
+
             passed = True
             print('>>> Result 1: plus_z')
-            print('Brute Force = ', E_Bf)
-            print('Spirit      = ', E_Spirit)
+            print('E (Brute Force) = ', E_Bf)
+            print('E (Spirit)      = ', E_Spirit)
+            print('Avg. Grad (Brute Force) = ', np.mean(Gradient_Bf, axis = 0))
+            print('Avg. Grad (Spirit)      = ', np.mean(Gradient_Spirit, axis = 0))
             if np.abs(E_Bf - E_Spirit) > 1e-6:
                 passed = False
 
             configuration.random(p_state)
+            simulation.start(p_state, simulation.METHOD_LLG, simulation.SOLVER_SIB, n_iterations=1)
             system.update_data(p_state)
             E_Bf, E_Spirit = self.test_energy(p_state)
+            Gradient_Bf, Gradient_Spirit = self.test_gradient(p_state)
             passed = True
             print('\n>>> Result 2: random')
-            print('Brute Force = ', E_Bf)
-            print('Spirit      = ', E_Spirit)
+            print('E (Brute Force) = ', E_Bf)
+            print('E (Spirit)      = ', E_Spirit)
+            print('Avg. Grad (Brute Force) = ', np.mean(Gradient_Bf, axis = 0))
+            print('Avg. Grad (Spirit)      = ', np.mean(Gradient_Spirit, axis = 0))
             if np.abs(E_Bf - E_Spirit) > 1e-6:
                 passed = False
 
             configuration.hopfion(p_state, 4)
+            simulation.start(p_state, simulation.METHOD_LLG, simulation.SOLVER_SIB, n_iterations=1)
             system.update_data(p_state)
             E_Bf, E_Spirit = self.test_energy(p_state)
+            Gradient_Bf, Gradient_Spirit = self.test_gradient(p_state)
             passed = True
             print('\n>>> Result 3: hopfion')
-            print('Brute Force = ', E_Bf)
-            print('Spirit      = ', E_Spirit)
+            print('E (Brute Force) = ', E_Bf)
+            print('E (Spirit)      = ', E_Spirit)
+            print('Avg. Grad (Brute Force) = ', np.mean(Gradient_Bf, axis = 0))
+            print('Avg. Grad (Spirit)      = ', np.mean(Gradient_Spirit, axis = 0))
             if np.abs(E_Bf - E_Spirit) > 1e-6:
                 passed = False
             
