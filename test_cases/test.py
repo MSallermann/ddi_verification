@@ -68,6 +68,6 @@ class Test:
                 gradient[i] += self.ddi_mult/d**3 * mu_s[j] * (3 * r * np.dot(spins[j], r) - spins[j])
         return gradient
 
-    def run(self) -> bool:
+    def run(self):
         print("NOT IMPLEMENTED")
         return True
