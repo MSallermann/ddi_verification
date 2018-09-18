@@ -2,5 +2,7 @@ from test_cases.test_brute_force import Test_Brute_Force
 from test_cases.test_continuous_nucleation import Test_Continuous_Nucleation
 from test_cases.test_homogeneous_sphere import Test_Homogeneous_Sphere
 from test_cases.test_mu_s_scaling import Test_mu_s_Scaling
+from test_cases.test_saturated_film import Test_Saturated_Film
+
 
 

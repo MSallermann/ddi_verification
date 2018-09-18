@@ -7,10 +7,10 @@ from test_cases import *
 
 tests = [   
             Test_Brute_Force(), 
-            Test_Continuous_Nucleation(), 
-            Test_Homogeneous_Sphere(),
+            # Test_Continuous_Nucleation(), 
+            # Test_Homogeneous_Sphere(),
             Test_mu_s_Scaling(),
-            Test_Continuous_Nucleation()
+            Test_Saturated_Film()
         ]
 
 number_of_tests = 0
@@ -21,6 +21,7 @@ failed = []
 for test in tests:
     print("--------------------------------")
     print("-->> BEGIN Test: " + test.name + " <<--\n")
+    print('Information: ', test.information)
     if test.run():
         passed.append(test.name)
     else:
