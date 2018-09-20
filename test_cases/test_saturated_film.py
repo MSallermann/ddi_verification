@@ -1,4 +1,4 @@
-from spirit import state, simulation, constants, geometry, system, hamiltonian, configuration
+from spirit import state, simulation, constants, parameters , geometry, system, hamiltonian, configuration
 import numpy as np
 from .test import Test
 
@@ -6,35 +6,42 @@ class Test_Saturated_Film(Test):
 
     name = "Uniformly magnetized film"
     inputfile = "test_cases/input/input_saturated_film.cfg"
-    information = "Test the field of a 2D-film that is uniformly magnetized in z-direction. The field is tested at the center of a circular cutout and compared with a theoretical result, where the magnetization is approximated as continuous. Defects need to be enabled and the tangential projection of the field needs to be disabled!"
+    information = "Test the field of a 2D-film that is uniformly magnetized in z-direction. The result is compared to the theoretical direct sum!"
 
-    def run(self):
+    def run(self, enable_output = True):
         passed = True
-        l=1000
+        self.inputfile = "test_cases/input/input_saturated_film.cfg"
 
-        with state.State(self.inputfile, quiet = True) as p_state:
+        theory = 0.5
+        N_ITERATIONS = 1
+        system_sizes = [10 * (i+1) for i in range(5)]
+        field_center = []
+        E = []
 
-            configuration.plus_z(p_state)
-            system.update_data(p_state)
-            nos = system.get_nos(p_state)
+        for size in system_sizes:
+            with state.State(self.inputfile) as p_state:
+                parameters.llg.set_output_general(p_state, any=False)
+                geometry.set_n_cells(p_state, [size, size, 1])
+                configuration.plus_z(p_state)
+                nos = system.get_nos(p_state)
 
-            E_Spirit = system.get_energy(p_state)
+                simulation.start(p_state, simulation.METHOD_LLG, simulation.SOLVER_VP, n_iterations = 1)
 
-            simulation.start(p_state, simulation.METHOD_LLG, simulation.SOLVER_SIB, n_iterations=1)
-            Gradient_Spirit = np.array(system.get_effective_field(p_state)).reshape(nos, 3)
-            field_center = Gradient_Spirit[int(l/2 + l/2 * l)]
+                Gradient_Spirit = np.array(system.get_effective_field(p_state)).reshape(nos, 3)
+                E_Spirit = system.get_energy(p_state)
 
-            #Theory
-            field_center_theory = - self.mu_0 * self.mu_B / (2 * 20 * 1e-10) * (self.mu_B * 1e20) * np.array([0, 0, 1])
+                field_center.append(Gradient_Spirit[int(size/2 + size/2 * size)])
+                E.append(E_Spirit)
+                
+        if enable_output:
+            with open('output_'+self.name+'.txt', 'w') as out:
+                out.write("#system_size, field_center_z, energy\n")
+                for i in range(len(E)):
+                    out.write("{0}, {1}, {2}\n".format(system_sizes[i], field_center[i][2], E[i]))
 
-            print('Result:')
-            print('Field (center)              = ', field_center)
-            print('Field (center) (Theory)     = ', field_center_theory)
-           
-            if np.linalg.norm(np.linalg.norm(field_center - field_center_theory) > 1e-2):
-                passed = False
 
-            return passed
+
+
 
 
 
