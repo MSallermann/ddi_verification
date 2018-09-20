@@ -6,7 +6,7 @@ class Test_Saturated_Film(Test):
 
     name = "Uniformly magnetized film"
     inputfile = "test_cases/input/input_saturated_film.cfg"
-    information = "Test the field of a 2D-film that is uniformly magnetized in z-direction. The field is tested at the center of a circular cutout and compared with a theoretical result, where the magnetization is approximated as continuous"
+    information = "Test the field of a 2D-film that is uniformly magnetized in z-direction. The field is tested at the center of a circular cutout and compared with a theoretical result, where the magnetization is approximated as continuous. Defects need to be enabled and the tangential projection of the field needs to be disabled!"
 
     def run(self):
         passed = True
@@ -25,7 +25,6 @@ class Test_Saturated_Film(Test):
             field_center = Gradient_Spirit[int(l/2 + l/2 * l)]
 
             #Theory
-            # avg_field_theory = 2 * np.pi / (1e-10) * self.mu_s* (self.mu_0 * self.mu_B**2) / (4*np.pi * 1e-30)
             field_center_theory = - self.mu_0 * self.mu_B / (2 * 20 * 1e-10) * (self.mu_B * 1e20) * np.array([0, 0, 1])
 
             print('Result:')

@@ -4,6 +4,7 @@ import numpy as np
 
 class Test_mu_s_Scaling(Test):
     name = "mu_s scaling"
+    info = "Test if the energy scales correctly with mu_s^2."
     inputfile1 = "test_cases/input/input_mu_s_scaling_1.cfg"
     inputfile2 = "test_cases/input/input_mu_s_scaling_2.cfg"
 
@@ -24,7 +25,7 @@ class Test_mu_s_Scaling(Test):
             print('\n>>> Result 2: mu_s = 2')
             print('E_DDI = ', E_2)
         
-        if np.abs(E_1 * 2**2 - E_2) > 1e-6:
+        if np.abs(E_1 * 2**2 - E_2) > 1e-1:
             passed = False
 
         return passed

@@ -27,7 +27,7 @@ class Test_Brute_Force(Test):
             print('E (Spirit)      = ', E_Spirit)
             print('Avg. Grad (Brute Force) = ', np.mean(Gradient_Bf, axis = 0))
             print('Avg. Grad (Spirit)      = ', np.mean(Gradient_Spirit, axis = 0))
-            if np.abs(E_Bf - E_Spirit) > 1e-6:
+            if np.abs(E_Bf - E_Spirit) > 1e-4:
                 passed = False
 
             configuration.random(p_state)
@@ -41,7 +41,7 @@ class Test_Brute_Force(Test):
             print('E (Spirit)      = ', E_Spirit)
             print('Avg. Grad (Brute Force) = ', np.mean(Gradient_Bf, axis = 0))
             print('Avg. Grad (Spirit)      = ', np.mean(Gradient_Spirit, axis = 0))
-            if np.abs(E_Bf - E_Spirit) > 1e-6:
+            if np.abs(E_Bf - E_Spirit) > 1e-4:
                 passed = False
 
             configuration.hopfion(p_state, 4)
@@ -55,7 +55,7 @@ class Test_Brute_Force(Test):
             print('E (Spirit)      = ', E_Spirit)
             print('Avg. Grad (Brute Force) = ', np.mean(Gradient_Bf, axis = 0))
             print('Avg. Grad (Spirit)      = ', np.mean(Gradient_Spirit, axis = 0))
-            if np.abs(E_Bf - E_Spirit) > 1e-6:
+            if np.abs(E_Bf - E_Spirit) > 1e-4:
                 passed = False
             
             return passed
