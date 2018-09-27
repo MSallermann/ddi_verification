@@ -6,8 +6,8 @@ class Test:
     inputfile = ""
     information = "Base Test Information"
 
-    mu_0 = 2.01335452495e-28
-    mu_B = 0.0578838177025
+    mu_0 = 2.0133545*1e-28
+    mu_B = 0.057883817555
     ddi_mult = - mu_0 * mu_B**2 / (4 * np.pi * 1e-30) 
 
     def test_energy(self, p_state, mu = None):

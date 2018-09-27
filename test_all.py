@@ -9,8 +9,10 @@ tests = [
             Test_Brute_Force(), 
             # Test_Continuous_Nucleation(), 
             # Test_Homogeneous_Sphere(),
-            Test_mu_s_Scaling(),
-            Test_Saturated_Film()
+            # Test_mu_s_Scaling(),
+            # Test_Saturated_Film(),
+            # Test_Saturated_Film_Cutout()
+
         ]
 
 number_of_tests = 0
