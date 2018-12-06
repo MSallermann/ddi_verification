@@ -84,7 +84,7 @@ def test_gradient(p_state, mu = None):
 def run():
     with state.State("input/input_brute_force.cfg", quiet = True) as p_state:
         #turn ddi on
-        hamiltonian.set_ddi(p_state, 1)
+        hamiltonian.set_ddi(p_state, hamiltonian.DDI_METHOD_FFT, [4,4,4], 20)
 
         #turn everything else off
         hamiltonian.set_exchange(p_state, 0, [])
